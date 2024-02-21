@@ -1,8 +1,10 @@
 import java.awt.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.event.*;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +20,8 @@ public class LoginPage {
 	String curUsername = "";
 	JPasswordField password;
 	JTextField username;
+    String auth;
+    //static Credentials userCredentials;
     public LoginPage() {
         JFrame frame = new JFrame("Login");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,11 +41,11 @@ public class LoginPage {
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         loginPanel.setBackground(Color.white);
-        loginPanel.setBounds(460, 150, 350, 300);
+        loginPanel.setBounds(460, 150, 350, 330);
 
         //username input
         JPanel filler = new JPanel();
-        filler.setPreferredSize(new Dimension(350, 50));
+        filler.setPreferredSize(new Dimension(350, 25));
         filler.setBackground(Color.white);
         loginPanel.add(filler);
         JLabel userDesc = new JLabel("Username");
@@ -79,50 +83,54 @@ public class LoginPage {
         login.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         login.setPreferredSize(new Dimension(340,45));
 
-        login.addActionListener(e -> {
-            if(validate()) {
-                new MainFrame();
-            } else {
-                new LoginPage();
+        /**login.addActionListener(e -> {
+            try {
+            	if(validate()) {
+                    if (auth == "student"){
+                        new MainFrame();
+                        //MainFrame.saveUser();
+                    } else if (auth == "admin"){
+                        new AdminView();
+                        //AdminView.saveUser();
+                    }
+            	} else {
+            
+                //if (!validate()) {
+            		new LoginPage();
+            	}
+			} catch (IOException | ClassNotFoundException e1) {
+				e1.printStackTrace();
+            }
+            frame.dispose();
+        });*/
+        loginPanel.add(login);
+
+        JTextField option = new JTextField("or");
+        option.setEditable(false);
+        option.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        option.setBackground(Color.white);
+        option.setForeground(Color.GRAY);
+        option.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+        option.setPreferredSize(new Dimension(340,25));
+        option.setHorizontalAlignment(JTextField.CENTER);
+        loginPanel.add(option);
+
+        JButton newAccount = new JButton("Create an account");
+        newAccount.setBackground(Color.decode("#76BEE8"));
+        newAccount.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+        newAccount.setPreferredSize(new Dimension(340,45));
+        newAccount.addActionListener(e -> {
+            try {
+                new AccountSetup();
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
             frame.dispose();
         });
-        loginPanel.add(login);
+        loginPanel.add(newAccount);
+        
 
         frame.add(loginPanel);
-        
-        //button to create an account
-        JPanel newAccountPanel = new JPanel();
-        newAccountPanel.setBounds(425, 0, 200, 75);
-        JButton newAccount = new JButton("Create an account");
-        newAccount.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-        newAccount.setBounds(460, 460, 350, 45);
-        newAccount.addActionListener(e -> {
-            new AccountSetup();
-            frame.dispose();
-        });
-        
-        newAccountPanel.add(newAccount);
-        frame.add(newAccount);
         frame.setVisible(true);
-        
-    }
-    	public boolean validate() {
-    		enteredPassword = password.getPassword();
-    		for(int i = 0; i < enteredPassword.length; i++) {
-    			curPassword += enteredPassword[i];
-    		}
-    		curUsername = username.getText();
-    		System.out.println(curUsername);
-    		System.out.println(curPassword);
-    		for(Student s : Student.getStudents()) {
-    			System.out.print(s.getName() + " ");
-    			System.out.println(s.getPassword());
-    			if(s.getName().equals(curUsername) && s.getPassword().equals(curPassword)) {
-    				MainFrame.curUser = s;
-    				return true;
-    			}
-    		}
-    		return false;
     }
 }
