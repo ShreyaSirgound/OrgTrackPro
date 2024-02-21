@@ -13,6 +13,11 @@ public class Admin {
     private String email;
 
     /**
+     * The administrator's school
+     */
+    private String school;
+
+    /**
      * The administrator's password
      */
     private String password;
@@ -20,9 +25,10 @@ public class Admin {
     /**
      * Creates a new admin object
     */
-    public Admin(String name, String email, String password){
+    public Admin(String name, String email, String school, String password){
         this.name = name;
         this.email = email;
+        this.school = school;
         this.password = password;
     }
 
@@ -41,6 +47,14 @@ public class Admin {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getSchool() {
+        return school;
+    }
+    
+    public void setSchool(String school) {
+        this.school = school;
+    }
     
     public String getPassword() {
         return password;
@@ -48,6 +62,24 @@ public class Admin {
     
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static String toString(Admin a){
+        String admin = a.getName() + "|"
+                        + a.getEmail() + "|"
+                        + a.getSchool() + "|"
+                        + a.getPassword();
+        return admin;
+    }
+
+    public static boolean exists(Admin a){
+        boolean exists = true;
+        for(Admin admin : getAdmins()){
+            if(admin.toString().equals(a.toString())){
+                return false;
+            } 
+        }
+        return exists;
     }
 
     //creates a list of all the administrators

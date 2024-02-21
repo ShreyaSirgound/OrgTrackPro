@@ -21,7 +21,6 @@ public class LoginPage {
 	JPasswordField password;
 	JTextField username;
     String auth;
-    //static Credentials userCredentials;
     public LoginPage() {
         JFrame frame = new JFrame("Login");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -83,26 +82,14 @@ public class LoginPage {
         login.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         login.setPreferredSize(new Dimension(340,45));
 
-        /**login.addActionListener(e -> {
-            try {
-            	if(validate()) {
-                    if (auth == "student"){
-                        new MainFrame();
-                        //MainFrame.saveUser();
-                    } else if (auth == "admin"){
-                        new AdminView();
-                        //AdminView.saveUser();
-                    }
-            	} else {
-            
-                //if (!validate()) {
-            		new LoginPage();
-            	}
-			} catch (IOException | ClassNotFoundException e1) {
-				e1.printStackTrace();
+        login.addActionListener(e -> {
+            if(validate()) {
+                new MainFrame();
+            } else {
+            	new LoginPage();
             }
             frame.dispose();
-        });*/
+        });
         loginPanel.add(login);
 
         JTextField option = new JTextField("or");
@@ -132,5 +119,27 @@ public class LoginPage {
 
         frame.add(loginPanel);
         frame.setVisible(true);
+    }
+
+    public boolean validate() {
+        System.out.println("validating");
+        curUsername = username.getText();
+        enteredPassword = password.getPassword();
+        curPassword = new String(enteredPassword);
+        curPassword.trim();
+        
+        System.out.println(curUsername);
+        System.out.println(curPassword + " now");
+        for(Admin a : Admin.getAdmins()) {
+            if(a.getName().equals(curUsername)){
+                if(a.getPassword().equals(curPassword)){
+                    MainFrame.curUser = a;
+                    return true;
+                }
+            }
+        }
+        curUsername = "";
+        curPassword = "";
+        return false;
     }
 }

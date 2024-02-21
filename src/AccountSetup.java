@@ -29,7 +29,8 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 public class AccountSetup {
-	String auth, name, grade, email;
+    List<Admin> adminsList = Admin.getAdmins();
+	String name, email, school;
 	String enteredPassword = "";
 	char[] p;
     BufferedReader in;
@@ -104,10 +105,6 @@ public class AccountSetup {
         pane3.add(schoolsDropdown);
         mainPanel.add(pane3);
 
-        //panel3.add(schoolsDropdown);
-        //panel3.setAlignmentX(Component.LEFT_ALIGNMENT);
-        //mainPanel.add(panel3);
-
         //email input
         JPanel panel4 = new JPanel();
         panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
@@ -143,8 +140,33 @@ public class AccountSetup {
         createAcc.setBackground(Color.decode("#76BEE8"));
         createAcc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         createAcc.setPreferredSize(new Dimension(435,45));
-        //createAcc.addActionListener(e -> {
-        //});
+        createAcc.addActionListener(e -> {
+        	name = input2.getText();
+        	school = schoolsDropdown.getSelectedItem().toString();
+        	email = studentNumber.getText();
+        	p = password.getPassword();
+        	enteredPassword = new String(p);
+        	enteredPassword.trim();
+
+            Admin newAdmin = new Admin(name, email, school, enteredPassword);
+            System.out.println(Admin.exists(newAdmin));
+            boolean userExists = Admin.exists(newAdmin);
+            if(userExists == false){
+                MainFrame.curUser = newAdmin;
+                Admin.addAdmin(MainFrame.curUser);
+                try {
+                    MainFrame.saveUser();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                JOptionPane.showConfirmDialog(frame, "  An account with this data has already been created. Please log in to use Schoolsync services. ", 
+                                            "Duplicate Input Error",
+                                                    JOptionPane.OK_CANCEL_OPTION);
+            }
+            new LoginPage();
+            frame.dispose();
+        });
         mainPanel.add(createAcc);
     
         frame.add(mainPanel);
