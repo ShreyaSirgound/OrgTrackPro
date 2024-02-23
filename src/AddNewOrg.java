@@ -17,7 +17,6 @@ public class AddNewOrg {
     public AddNewOrg() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setSize(510, 450);
         frame.setLocationRelativeTo(null);
@@ -68,8 +67,8 @@ public class AddNewOrg {
             Org.addOrg(newOrg);
             try {
 				frame.dispose();
-				MainFrame.frame.dispose();
-                MainFrame.saveOrg();
+				Main.getMainFrame().dispose();
+                SearchRecords.saveOrg();
 				new MainFrame();
             } catch (IOException e1) {
                 e1.printStackTrace();

@@ -115,6 +115,19 @@ public class LoginPage {
             frame.dispose();
         });
         loginPanel.add(newAccount);
+
+        //TEMP BUTTON
+        JButton btn = new JButton("Main");
+        btn.setBackground(Color.decode("#76BEE8"));
+        btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+        btn.setPreferredSize(new Dimension(340,45));
+        btn.setBounds(0, 0, 340,45);
+
+        btn.addActionListener(e -> {
+            new MainFrame();
+            frame.dispose();
+        });
+        frame.add(btn);
         
 
         frame.add(loginPanel);
@@ -133,7 +146,7 @@ public class LoginPage {
         for(Admin a : Admin.getAdmins()) {
             if(a.getName().equals(curUsername)){
                 if(a.getPassword().equals(curPassword)){
-                    MainFrame.curUser = a;
+                    SearchRecords.curUser = a;
                     return true;
                 }
             }

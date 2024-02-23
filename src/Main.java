@@ -1,14 +1,14 @@
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class Main {
+	private static Frame mainFrame;
 	final static int MAX = 10000;
     static BufferedReader in, in2, in3; 
 	static BufferedWriter out;
@@ -80,4 +80,12 @@ public class Main {
 
         EventQueue.invokeLater(TitleFrame::new);
     }
+
+	public static Frame getMainFrame(){
+		return mainFrame;
+	}
+
+	public static void setMainFrame(Frame newMainFrame) {
+		mainFrame = newMainFrame;
+	}
 }
