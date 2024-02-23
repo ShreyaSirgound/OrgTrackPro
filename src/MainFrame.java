@@ -22,6 +22,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class MainFrame {
+    static JFrame frame;
     static BufferedWriter out, out2, out3;
     static Admin curUser;
     DefaultTableModel model;
@@ -31,7 +32,7 @@ public class MainFrame {
 
     public MainFrame(){
         //setup the frame
-        JFrame frame = new JFrame("Data Records");
+        frame = new JFrame("Data Records");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setSize(1280, 720);
