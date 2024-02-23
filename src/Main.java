@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
