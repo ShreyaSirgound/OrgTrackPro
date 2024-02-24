@@ -87,7 +87,7 @@ public class OrgRecords extends JPanel {
                     }
                 } else {
                     if(table.getRowCount()==0) {
-                        JOptionPane.showMessageDialog(null, "Table is empty.");
+                        JOptionPane.showMessageDialog(null, "The table is empty. Please add an organization to proceed.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Please select only one row to delete.");
                     }
@@ -107,6 +107,28 @@ public class OrgRecords extends JPanel {
 			}
 		});
         add(addNote);
+
+        //button to email an organization from the table
+		JButton emailOrg = new JButton("Email An Organization");
+		emailOrg.setBounds(1050, 340, 180, 50);
+        emailOrg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                if(table.getSelectedRowCount()==1) {
+                    int row = table.getSelectedRow();
+                    String email = table.getModel().getValueAt(row, 2).toString();
+                    new EmailView();
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "The table is empty. Please add an organization to proceed.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to access email function.");
+                    }
+                }
+            }
+         });
+         add(emailOrg);
 
         JLabel title1 = new JLabel("Organization Records");
         title1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));

@@ -101,6 +101,28 @@ public class OrgData extends JPanel {
 		});
         add(addNote);
 
+        //button to email an organization from the table
+		JButton emailContact = new JButton("Email A Contact");
+		emailContact.setBounds(1050, 340, 180, 50);
+        emailContact.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                if(table.getSelectedRowCount()==1) {
+                    int row = table.getSelectedRow();
+                    String email = table.getModel().getValueAt(row, 2).toString();
+                    new EmailView();
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "The table is empty. Please add a contact to proceed.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to access email function.");
+                    }
+                }
+            }
+         });
+         add(emailContact);
+
         JLabel title1 = new JLabel("Organization Data");
         title1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));
         title1.setForeground(Color.gray);
