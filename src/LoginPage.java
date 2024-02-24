@@ -146,7 +146,7 @@ public class LoginPage {
         for(Admin a : Admin.getAdmins()) {
             if(a.getName().equals(curUsername)){
                 if(a.getPassword().equals(curPassword)){
-                    SearchRecords.curUser = a;
+                    OrgRecords.curUser = a;
                     return true;
                 }
             }

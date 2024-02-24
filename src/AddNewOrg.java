@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.IOException;
@@ -8,13 +9,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class AddNewOrg {
-    public AddNewOrg() {
+    public AddNewOrg(String addition, Component c) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -23,81 +25,107 @@ public class AddNewOrg {
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.white);
 
-        JLabel title = new JLabel("Add New Organization");
+        JLabel title = new JLabel("Add New " + addition);
         title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));
         title.setForeground(Color.gray);
         title.setBounds(20, 0, 250, 50);
         frame.add(title);
 
-        JPanel eventEdit = new JPanel();
-        eventEdit.setBounds(20, 40, 450, 350);
-		eventEdit.setLayout(new BoxLayout(eventEdit, BoxLayout.Y_AXIS));
-		eventEdit.setBorder(new EmptyBorder(10, 10, 10, 30));
+        JPanel dataAdd = new JPanel();
+        dataAdd.setBounds(20, 40, 450, 350);
+		dataAdd.setLayout(new BoxLayout(dataAdd, BoxLayout.Y_AXIS));
+		dataAdd.setBorder(new EmptyBorder(10, 10, 10, 30));
 		
-		JLabel nameLbl = new JLabel("Organization Name");
+		JLabel nameLbl = new JLabel(addition + " Name");
 		nameLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-		JTextField orgName = new JTextField(50);
-		orgName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		JTextField nameInput = new JTextField(50);
+		nameInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 
         JLabel emailLbl = new JLabel("Email");
 		emailLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-		JTextField orgEmail = new JTextField(50);
-		orgEmail.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		JTextField emailInput = new JTextField(50);
+		emailInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 
-        JLabel phoneLbl = new JLabel("Contact Number");
+        JLabel phoneLbl = new JLabel("Phone Number");
 		phoneLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-		JTextField orgPhoneNum = new JTextField(50);
-		orgPhoneNum.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		JTextField phoneNumInput = new JTextField(50);
+		phoneNumInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		
 		JLabel descLbl = new JLabel("Description");
 		descLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-		JTextField orgDesc = new JTextField(50);
-		orgDesc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		JTextField descInput = new JTextField(50);
+		descInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 
 		JLabel addressLbl = new JLabel("Location");
 		addressLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
-		JTextField orgAddress = new JTextField(50);
-		orgAddress.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		JTextField orgAddressInput = new JTextField(50);
+		orgAddressInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 
 		//button to update an instance of the event object
-	    JButton updateEvent = new JButton("Add Organization");
+	    JButton updateEvent = new JButton("Add " + addition);
 		updateEvent.setBounds(30, 450, 60, 40);
 		updateEvent.addActionListener(e -> {
-            Org newOrg = new Org(orgName.getText(), orgEmail.getText(), orgPhoneNum.getText(), orgDesc.getText(), orgAddress.getText());
-            Org.addOrg(newOrg);
-            try {
-				frame.dispose();
-				Main.getMainFrame().dispose();
-                SearchRecords.saveOrg();
-				new MainFrame();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+			//validating that all inputs have been added
+			if(nameInput.getText().equals("") || emailInput.getText().equals("") || phoneNumInput.getText().equals("") || descInput.getText().equals("") || orgAddressInput.getText().equals("")){
+				JOptionPane.showMessageDialog(frame,"Please enter information in all fields.","Alert",JOptionPane.WARNING_MESSAGE);
+				return;
+			} else if(nameInput.getText().equals(null) || emailInput.getText().equals(null) || phoneNumInput.getText().equals(null) || descInput.getText().equals(null) || orgAddressInput.getText().equals(null)) {
+				JOptionPane.showMessageDialog(frame,"Please enter information in all fields.","Alert",JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			//if all inputs validated the data is saved accordingly
+			if(addition.equals("Organization")){
+				Org newOrg = new Org(nameInput.getText(), emailInput.getText(), phoneNumInput.getText(), descInput.getText(), orgAddressInput.getText());
+				Org.addOrg(newOrg);
+				try {
+					frame.dispose();
+					Main.getMainFrame().dispose();
+					OrgRecords.saveOrg(); 
+					new MainFrame();
+					JOptionPane.showMessageDialog(c, addition + " added successfully!");  
+					return;
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			} else if(addition.equals("Contact")){
+				Contact newContact = new Contact(nameInput.getText(), emailInput.getText(), phoneNumInput.getText(), descInput.getText(), orgAddressInput.getText());
+				Contact.addContact(newContact);
+				try {
+					frame.dispose();
+					Main.getMainFrame().dispose();
+					OrgData.saveContact();
+					new MainFrame();
+					JOptionPane.showMessageDialog(c, addition + " added successfully!");  
+					return;
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
         });
 
-        eventEdit.add(nameLbl);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(orgName);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(descLbl);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(orgDesc);
-        eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-        eventEdit.add(emailLbl);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(orgEmail);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-        eventEdit.add(phoneLbl);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(orgPhoneNum);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(addressLbl);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(orgAddress);
-		eventEdit.add(Box.createRigidArea(new Dimension(0, 5)));
-		eventEdit.add(updateEvent);
-        frame.add(eventEdit);
+        dataAdd.add(nameLbl);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(nameInput);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(descLbl);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(descInput);
+        dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+        dataAdd.add(emailLbl);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(emailInput);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+        dataAdd.add(phoneLbl);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(phoneNumInput);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(addressLbl);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(orgAddressInput);
+		dataAdd.add(Box.createRigidArea(new Dimension(0, 5)));
+		dataAdd.add(updateEvent);
+        frame.add(dataAdd);
 
         frame.setVisible(true);
     }

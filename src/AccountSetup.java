@@ -152,10 +152,10 @@ public class AccountSetup {
             System.out.println(Admin.exists(newAdmin));
             boolean userExists = Admin.exists(newAdmin);
             if(userExists == false){
-                SearchRecords.curUser = newAdmin;
-                Admin.addAdmin(SearchRecords.curUser);
+                OrgRecords.curUser = newAdmin;
+                Admin.addAdmin(OrgRecords.curUser);
                 try {
-                    SearchRecords.saveUser();
+                    OrgRecords.saveUser();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

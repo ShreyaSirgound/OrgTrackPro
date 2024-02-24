@@ -21,12 +21,12 @@ public class MainFrame {
         //The tabbed pane containing available views.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        JTabbedPane tabs = new JTabbedPane(JTabbedPane.LEFT); 
+        JTabbedPane tabs = new JTabbedPane();//JTabbedPane.LEFT); 
         tabs.setUI(new SpacedTabbedPaneUI());
-        tabs.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        tabs.add("<html><body><table width='170'><tr><td><center>Search Records</center></td></tr></table></body></html>", new SearchRecords());
-        tabs.add("<html><body><table width='170'><tr><td><center>Organization Data</center></td></tr></table></body></html>", null);
         tabs.setOpaque(true);
+        tabs.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        tabs.add("<html><body><table width='190'><tr><td><center>Organization Records</center></td></tr></table></body></html>", new OrgRecords());
+        tabs.add("<html><body><table width='190'><tr><td><center>Organization Data</center></td></tr></table></body></html>", new OrgData());
         mainPanel.add(tabs);
         
         frame.add(mainPanel);

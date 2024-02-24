@@ -1,5 +1,5 @@
-Tesla|Amazon|BestBuy|Walmart|Starbucks|Apple|Food Basics|Shoppers Drug Mart|Ferrero|Old Navy|McDonalds|
-tesla@mail|amazon@mail|bestbuy@mail|walmart@mail|starbucks@mail|apple@mail|foodbasics@mail|shopper@mail|ferrero@mail|oldnavy@mail|mcdonalds@mail|
-123-456-789|123-456-789|123-456-789|123-456-789|123-456-789|456-876-989|788-909-754|888-888-999|222-333-444|555-666-555|444-333-555|
-address1|address2|address3|address4|address5|california|idk|canada|world|north america|everywhere|
-cars|things|tech|essentials|coffee|phones|food|random|chocolate|clothes|fast food|
+Tesla|Amazon|BestBuy|Walmart|Starbucks|Apple|Food Basics|Shoppers Drug Mart|Ferrero|Old Navy|McDonalds||
+tesla@mail|amazon@mail|bestbuy@mail|walmart@mail|starbucks@mail|apple@mail|foodbasics@mail|shopper@mail|ferrero@mail|oldnavy@mail|mcdonalds@mail||
+123-456-789|123-456-789|123-456-789|123-456-789|123-456-789|456-876-989|788-909-754|888-888-999|222-333-444|555-666-555|444-333-555||
+address1|address2|address3|address4|address5|california|idk|canada|world|north america|everywhere||
+cars|things|tech|essentials|coffee|phones|food|random|chocolate|clothes|fast food||

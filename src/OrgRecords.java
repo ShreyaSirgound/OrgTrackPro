@@ -1,21 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.EventObject;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -23,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class SearchRecords extends JPanel {
+public class OrgRecords extends JPanel {
     static JFrame frame;
     static BufferedWriter out, out2, out3;
     static Admin curUser;
@@ -32,7 +29,7 @@ public class SearchRecords extends JPanel {
     TableRowSorter<TableModel> rowSorter;
     JScrollPane sp;
 
-    public SearchRecords() {
+    public OrgRecords() {
         setLayout(null);
 
         //titlebar
@@ -52,19 +49,29 @@ public class SearchRecords extends JPanel {
         sidebar.setBounds(0, 0, 300, 720);
         //button to add a new organization to the records
 		JButton addOrg = new JButton("Add An Organization");
-		addOrg.setBounds(750, 80, 180, 25);
+		addOrg.setBounds(1050, 160, 180, 50);
 		addOrg.addActionListener(e -> {
 			try {
-				new AddNewOrg();
+				new AddNewOrg("Organization", this);
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}
 		});
-        //sidebar.add(addOrg);
-        //add(sidebar);
         add(addOrg);
 
-        JLabel title1 = new JLabel("Search Records");
+        //button to add a new organization to the records
+		JButton addNote = new JButton("Create a Note");
+		addNote.setBounds(1050, 220, 180, 50);
+		addNote.addActionListener(e -> {
+			try {
+				new Notepad();
+			} catch (NullPointerException e1) {
+				e1.printStackTrace();
+			}
+		});
+        add(addNote);
+
+        JLabel title1 = new JLabel("Organization Records");
         title1.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));
         title1.setForeground(Color.gray);
         title1.setBounds(125, 10, 250, 50);
@@ -82,8 +89,8 @@ public class SearchRecords extends JPanel {
             data[organizationNum][5] = o.getDesc();
             organizationNum++;
         }
-        String[] columnNames = {"Order #", "Organization Name", "Email", "Phone #", "Address", "Description"}; //array to hold column names of the data table
-       
+        String[] columnNames = {"Order #", "Organization Name", "Email", "Phone Number", "Address", "Description"}; 
+
         //initializing the data table
         model = new DefaultTableModel(data, columnNames){
             @Override
@@ -108,7 +115,7 @@ public class SearchRecords extends JPanel {
         JTextField tf = new JTextField();
         tf.setEditable(true);
         tf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        tf.setBounds(280, 70, 400, 35);
+        tf.setBounds(280, 70, 550, 35);
         add(lbl);
         add(tf);
 
