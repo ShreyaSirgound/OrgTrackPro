@@ -11,11 +11,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main {
 	private static Frame mainFrame;
 	final static int MAX = 10000;
-    static BufferedReader in, in2, in3; 
+    static BufferedReader in, in2, in3, in4; 
 	static BufferedWriter out;
 	static int numOfAccounts;
 	static String fullName;
-    static String[] names, emails, passwords, schools, phoneNums, addresses, descs;
+    static String[] names, emails, passwords, schools, phoneNums, addresses, organizations, descs;
 	static String fileName1 = "data\\admins.txt";
 	static Admin curUser;
     public static void main(String[] args) throws Exception {
@@ -24,6 +24,7 @@ public class Main {
 		schools = new String[MAX];
     	passwords = new String[MAX];
 
+		System.out.println("\n --Admins Data--");
         //reads in all existing administrator accounts
 		try {
 			in = new BufferedReader(new FileReader("data\\admins.txt"));
@@ -48,6 +49,7 @@ public class Main {
 		} catch (NullPointerException e){
 			e.printStackTrace();
 		}
+		System.out.println("\n --Organizations Data--");
 
 		//reads in all existing organization data
 		try {
@@ -65,6 +67,28 @@ public class Main {
 			in3.close();
 			for(Org o : Org.getOrgs()){
 				System.out.println(Org.toString(o));
+			}
+		} catch (NullPointerException e){
+			e.printStackTrace();
+		}
+		System.out.println("\n --Contacts Data--");
+
+		//reads in all existing contacts data
+		try {
+			in4 = new BufferedReader(new FileReader("data\\orgContacts.txt"));
+			names = in4.readLine().split("\\|");
+			emails = in4.readLine().split("\\|");
+			phoneNums = in4.readLine().split("\\|");
+			organizations = in4.readLine().split("\\|");
+			descs = in4.readLine().split("\\|");
+
+			numOfAccounts = names.length;
+			for(int i = 0; i < numOfAccounts; i++) {
+				Contact.addContact(new Contact(names[i], emails[i], phoneNums[i], descs[i], organizations[i]));
+			}
+			in4.close();
+			for(Contact c : Contact.getContacts()){
+				System.out.println(Contact.toString(c));
 			}
 		} catch (NullPointerException e){
 			e.printStackTrace();

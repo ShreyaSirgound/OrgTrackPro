@@ -1,9 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,12 +18,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import org.w3c.dom.events.Event;
 
 public class OrgRecords extends JPanel {
     static JFrame frame;
@@ -47,6 +56,7 @@ public class OrgRecords extends JPanel {
         sidebar.setBorder( new EmptyBorder(15, 15, 15, 15));
         sidebar.setBackground(Color.decode("#3E3F40"));
         sidebar.setBounds(0, 0, 300, 720);
+
         //button to add a new organization to the records
 		JButton addOrg = new JButton("Add An Organization");
 		addOrg.setBounds(1050, 160, 180, 50);
@@ -59,9 +69,36 @@ public class OrgRecords extends JPanel {
 		});
         add(addOrg);
 
+        //button to delete an organization from the table
+		JButton deleteOrg = new JButton("Delete An Organization");
+		deleteOrg.setBounds(1050, 220, 180, 50);
+        deleteOrg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                if(table.getSelectedRowCount()==1) {
+                    Org.removeOrg(Org.getOrgs().get(table.getSelectedRow()));
+                    t.removeRow(table.getSelectedRow());
+                    try {
+                        saveOrg();
+                        new MainFrame();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "Table is empty.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to delete.");
+                    }
+                }
+            }
+         });
+         add(deleteOrg);
+
         //button to add a new organization to the records
 		JButton addNote = new JButton("Create a Note");
-		addNote.setBounds(1050, 220, 180, 50);
+		addNote.setBounds(1050, 280, 180, 50);
 		addNote.addActionListener(e -> {
 			try {
 				new Notepad();
@@ -76,6 +113,7 @@ public class OrgRecords extends JPanel {
         title1.setForeground(Color.gray);
         title1.setBounds(125, 10, 250, 50);
         add(title1);
+
 
         //data to be displayed in the JTable
         String[][] data = new String[Org.getOrgs().size()][6]; //2D array to hold information on all active students

@@ -1,12 +1,15 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -47,21 +50,48 @@ public class OrgData extends JPanel {
         sidebar.setBackground(Color.decode("#3E3F40"));
         sidebar.setBounds(0, 0, 300, 720);
         
-        //button to add a new organization to the records
-		JButton addOrg = new JButton("Add A Contact");
-		addOrg.setBounds(1050, 160, 180, 50);
-		addOrg.addActionListener(e -> {
+        //button to add a new contact to the records
+		JButton addContact = new JButton("Add A Contact");
+		addContact.setBounds(1050, 160, 180, 50);
+		addContact.addActionListener(e -> {
 			try {
 				new AddNewOrg("Contact", this);
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}
 		});
-        add(addOrg);
+        add(addContact);
 
-        //button to add a new organization to the records
+        //button to delete a contact from the records
+		JButton deleteContact = new JButton("Delete An Contact");
+		deleteContact.setBounds(1050, 220, 180, 50);
+		deleteContact.addActionListener(new ActionListener() {
+			@Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                if(table.getSelectedRowCount()==1) {
+                    Contact.removeContact(Contact.getContacts().get(table.getSelectedRow()));
+                    t.removeRow(table.getSelectedRow());
+                    try {
+                        saveContact();
+                        new MainFrame();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "Table is empty.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to delete.");
+                    }
+                }
+            }
+        });
+        add(deleteContact);
+
+        //button to add a new note 
 		JButton addNote = new JButton("Create a Note");
-		addNote.setBounds(1050, 220, 180, 50);
+		addNote.setBounds(1050, 280, 180, 50);
 		addNote.addActionListener(e -> {
 			try {
 				new Notepad();
