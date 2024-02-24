@@ -47,7 +47,7 @@ public class OrgRecords extends JPanel {
         titlebar.setLayout(new BorderLayout());
         titlebar.setBorder(new EmptyBorder(10, 10, 10, 80));
         titlebar.setBounds(0, 0, 1280, 60);
-        //titlebar.add(Common.getImage("orgtrackpro-logo.png"), BorderLayout.EAST); //TODO make smaller logo
+        titlebar.add(Common.getImage("orgtrackprologo-small.png"), BorderLayout.EAST);
         add(titlebar);
 
         //sidebar

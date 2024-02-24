@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -20,8 +21,8 @@ public class TitleFrame {
 
         //App logo
         JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        logoPanel.add(Common.getImage("orgtrackpro-logo.png"));
-        logoPanel.setBounds(325, 190, 610, 230);
+        logoPanel.add(Common.getImage("orgtrackprologo.png"));
+        logoPanel.setBounds(325, 190, 670, 230);
         frame.add(logoPanel);
 
         //Developers
