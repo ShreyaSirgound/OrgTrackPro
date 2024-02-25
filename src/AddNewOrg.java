@@ -16,7 +16,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class AddNewOrg {
-    public AddNewOrg(String addition, Component c) {
+    public AddNewOrg(String modify, String addition, Component c, String n, String m, String p, String d, String a) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -25,7 +25,7 @@ public class AddNewOrg {
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.white);
 
-        JLabel title = new JLabel("Add New " + addition);
+        JLabel title = new JLabel(modify + " New " + addition);
         title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 22));
         title.setForeground(Color.gray);
         title.setBounds(20, 0, 250, 50);
@@ -40,29 +40,34 @@ public class AddNewOrg {
 		nameLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		JTextField nameInput = new JTextField(50);
 		nameInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		nameInput.setText(n);
 
         JLabel emailLbl = new JLabel("Email");
 		emailLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		JTextField emailInput = new JTextField(50);
 		emailInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		emailInput.setText(m);
 
         JLabel phoneLbl = new JLabel("Phone Number");
 		phoneLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		JTextField phoneNumInput = new JTextField(50);
 		phoneNumInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		phoneNumInput.setText(p);
 		
 		JLabel descLbl = new JLabel("Description");
 		descLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		JTextField descInput = new JTextField(50);
 		descInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		descInput.setText(d);
 
-		JLabel addressLbl = new JLabel("Location");
+		JLabel addressLbl = new JLabel("Address");
 		addressLbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
 		JTextField orgAddressInput = new JTextField(50);
 		orgAddressInput.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		orgAddressInput.setText(a);
 
 		//button to update an instance of the event object
-	    JButton updateEvent = new JButton("Add " + addition);
+	    JButton updateEvent = new JButton(modify + " " + addition);
 		updateEvent.setBounds(30, 450, 60, 40);
 		updateEvent.addActionListener(e -> {
 			//validating that all inputs have been added

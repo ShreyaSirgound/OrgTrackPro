@@ -151,7 +151,7 @@ public class AccountSetup {
             Admin newAdmin = new Admin(name, email, school, enteredPassword);
             System.out.println(Admin.exists(newAdmin));
             boolean userExists = Admin.exists(newAdmin);
-            if(userExists == false){
+            if(userExists == true){
                 OrgRecords.curUser = newAdmin;
                 Admin.addAdmin(OrgRecords.curUser);
                 try {

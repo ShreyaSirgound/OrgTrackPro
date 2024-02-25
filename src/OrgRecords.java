@@ -62,18 +62,46 @@ public class OrgRecords extends JPanel {
 		addOrg.setBounds(1050, 160, 180, 50);
 		addOrg.addActionListener(e -> {
 			try {
-				new AddNewOrg("Organization", this);
+				new AddNewOrg("Add", "Organization", this, "", "", "", "", "");
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}
 		});
         add(addOrg);
 
+        //button to edit an existing organization to the records
+		JButton editOrg = new JButton("Edit An Organization");
+		editOrg.setBounds(1050, 230, 180, 50);
+        JPanel mainPanel = this;
+		editOrg.addActionListener(new ActionListener(){
+			@Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                int row = table.getSelectedRowCount();
+                if(row == 1) {
+                    new AddNewOrg("Edit", "Organization", mainPanel, String.valueOf(t.getValueAt(row, 1)), String.valueOf(t.getValueAt(row, 2)), String.valueOf(t.getValueAt(row, 3)), String.valueOf(t.getValueAt(row, 4)), String.valueOf(t.getValueAt(row, 5)));
+                    try {
+                        Org.removeOrg(Org.getOrgs().get(table.getSelectedRow()));
+                        saveOrg();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "The table is empty. Please add an organization to proceed.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to delete.");
+                    }
+                }
+            }
+         });
+        add(editOrg);
+
         //button to delete an organization from the table
 		JButton deleteOrg = new JButton("Delete An Organization");
-		deleteOrg.setBounds(1050, 220, 180, 50);
+		deleteOrg.setBounds(1050, 300, 180, 50);
         deleteOrg.addActionListener(new ActionListener() {
-            @Override
+        @Override
             public void actionPerformed(ActionEvent ae) {
                 DefaultTableModel t = (DefaultTableModel) table.getModel();
                 if(table.getSelectedRowCount()==1) {
@@ -96,9 +124,9 @@ public class OrgRecords extends JPanel {
          });
          add(deleteOrg);
 
-        //button to add a new organization to the records
+        //button to add a new note to the records
 		JButton addNote = new JButton("Create a Note");
-		addNote.setBounds(1050, 280, 180, 50);
+		addNote.setBounds(1050, 370, 180, 50);
 		addNote.addActionListener(e -> {
 			try {
 				new Notepad();
@@ -110,7 +138,7 @@ public class OrgRecords extends JPanel {
 
         //button to email an organization from the table
 		JButton emailOrg = new JButton("Email An Organization");
-		emailOrg.setBounds(1050, 340, 180, 50);
+		emailOrg.setBounds(1050, 440, 180, 50);
         emailOrg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

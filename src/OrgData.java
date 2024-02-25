@@ -55,16 +55,44 @@ public class OrgData extends JPanel {
 		addContact.setBounds(1050, 160, 180, 50);
 		addContact.addActionListener(e -> {
 			try {
-				new AddNewOrg("Contact", this);
+				new AddNewOrg("Add", "Contact", this, "", "", "", "", "");
 			} catch (NullPointerException e1) {
 				e1.printStackTrace();
 			}
 		});
         add(addContact);
 
+        //button to edit an existing contact to the records
+		JButton editOrg = new JButton("Edit A Contact");
+		editOrg.setBounds(1050, 230, 180, 50);
+        JPanel mainPanel = this;
+		editOrg.addActionListener(new ActionListener(){
+			@Override
+            public void actionPerformed(ActionEvent ae) {
+                DefaultTableModel t = (DefaultTableModel) table.getModel();
+                int row = table.getSelectedRowCount();
+                if(row == 1) {
+                    new AddNewOrg("Edit", "Contact", mainPanel, String.valueOf(t.getValueAt(row, 1)), String.valueOf(t.getValueAt(row, 2)), String.valueOf(t.getValueAt(row, 3)), String.valueOf(t.getValueAt(row, 4)), String.valueOf(t.getValueAt(row, 5)));
+                    try {
+                        Contact.removeContact(Contact.getContacts().get(table.getSelectedRow()));
+                        saveContact();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if(table.getRowCount()==0) {
+                        JOptionPane.showMessageDialog(null, "The table is empty. Please add a contact to proceed.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select only one row to delete.");
+                    }
+                }
+            }
+         });
+        add(editOrg);
+
         //button to delete a contact from the records
 		JButton deleteContact = new JButton("Delete A Contact");
-		deleteContact.setBounds(1050, 220, 180, 50);
+		deleteContact.setBounds(1050, 300, 180, 50);
 		deleteContact.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(ActionEvent ae) {
@@ -91,7 +119,7 @@ public class OrgData extends JPanel {
 
         //button to add a new note 
 		JButton addNote = new JButton("Create a Note");
-		addNote.setBounds(1050, 280, 180, 50);
+		addNote.setBounds(1050, 370, 180, 50);
 		addNote.addActionListener(e -> {
 			try {
 				new Notepad();
@@ -103,7 +131,7 @@ public class OrgData extends JPanel {
 
         //button to email an organization from the table
 		JButton emailContact = new JButton("Email A Contact");
-		emailContact.setBounds(1050, 340, 180, 50);
+		emailContact.setBounds(1050, 440, 180, 50);
         emailContact.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
