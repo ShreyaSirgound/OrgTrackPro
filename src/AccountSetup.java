@@ -160,7 +160,7 @@ public class AccountSetup {
                     e1.printStackTrace();
                 }
             } else {
-                JOptionPane.showConfirmDialog(frame, "  An account with this data has already been created. Please log in to use Schoolsync services. ", 
+                JOptionPane.showConfirmDialog(frame, "  An account with this data has already been created. Please log in to use OrgTrack Pro services. ", 
                                             "Duplicate Input Error",
                                                     JOptionPane.OK_CANCEL_OPTION);
             }
